@@ -3,7 +3,7 @@ from censuredWords import censuredWords
 import os
 import discord
 
-DISCORD_TOKEN = os.environ.get("DISCORD_BOT_TOKEN")
+DISCORD_TOKEN = os.environ.get("DISCORD_TOKEN")
 
 client = discord.Client(intents = discord.Intents.all())
 dalleClient = dalleIMG()
@@ -16,10 +16,11 @@ async def on_message(message):
         return
 
     if message.content.startswith('!create'):
-        promp = message.content[8:]
-        correctedPromp = censuredWords.deleteWords(promp)
-        image_url = dalleClient.get_dalle(correctedPromp)
-        await message.channel.send(image_url)
+        if message.author.id == 829141762139619361:
+            promp = message.content[8:]
+            correctedPromp = censuredWords.deleteWords(promp)
+            image_url = dalleClient.get_dalle(correctedPromp)
+            await message.channel.send(image_url)
         
 
 client.run(DISCORD_TOKEN)
